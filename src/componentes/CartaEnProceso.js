@@ -3,26 +3,10 @@ import { porHacerReducer } from '../reducers/porHacerReducer';
 import { enProcesoReducer } from '../reducers/enProcesoReducer';
 import { Tarea } from './Tarea';
 
-const init = () =>{
-
-    return JSON.parse(localStorage.getItem('porHacer')) || [];
-    // return [{
-    //     id: new Date().getTime(),
-    //     desc: "Aprender React",
-    //     done: false
-    // }];
-
-}
-
-
-export const CartaPorHacer = () => {
+export const CartaEnProceso = () => {
     const [descripcion, setDescripcion] = useState(""); // Estado para el almacenamiento de la descripción de la tarea a agregar por Hacer    
-    const [porHacer, dispatch] = useReducer(porHacerReducer, [],init); /// Reducer para la manipulación de los por hacer
+    const [porHacer, dispatch] = useReducer(porHacerReducer, []); /// Reducer para la manipulación de los por hacer
     
-    useEffect(()=>{
-        localStorage.setItem('porHacer',JSON.stringify(porHacer))
-    },[porHacer])
-
     const handleInputChange = (e) =>{ // Cambio del estado descripción del estado por Hacer
         setDescripcion(e.target.value);
     }
@@ -55,14 +39,16 @@ export const CartaPorHacer = () => {
         dispatch(action);
     }
 
-    
+
+
+
 
   return (
-    /// Carta Por Hacer
+    /// Carta En Proceso
     <>
     
     <div className='cartaEstado'>
-      <p className='cartaTitulo'>Por Hacer : {porHacer.length}</p>
+      <p className='cartaTitulo'>En Proceso : {porHacer.length}</p>
         {
             porHacer.map((item,i)=>{
                 return(

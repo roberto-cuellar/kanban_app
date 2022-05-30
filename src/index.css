@@ -59,6 +59,7 @@ body a:visited{
 /* Configuración del panel de control */
 .panelDeControl{
   position: relative;
+  background-color: bisque;
 }
 
 .panelDeControl button{
@@ -83,10 +84,12 @@ body a:visited{
 /* Setup the cards */
 
 .cartaEstado{
+  position: relative;
   display: inline-block;
   margin-right: 20px;
   width: 23%;
   background-color: var(---fontLigthColor);
+  vertical-align: text-top;
 }
 
 .tarea{
