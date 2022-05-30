@@ -1,0 +1,73 @@
+/* Configuraciones globales */
+
+:root{
+  ---btnOneColor: gray;
+  ---btnOneColorHover: rgb(48, 48, 48);
+  ---fontLigthColor: white;
+  ---navBarHeight: 50px;
+}
+
+body a{
+  display: block;
+  text-decoration: none;
+  width: 100%;
+  height: 100%;
+}
+
+body a:hover{
+  background-color: var(---btnOneColorHover);
+}
+
+body a:visited{
+  color: var(---fontLigthColor);
+}
+
+
+/* Configuración de la Navbar */
+
+.navBar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(---navBarHeight);
+  background-color: var(---btnOneColor);
+  color: var(---fontLigthColor);
+}
+
+.navBar li{
+  list-style-type: none;
+  display: inline-block;
+  margin-right: 1%;
+}
+
+.navBar li+li{
+  position: relative;
+  left: 79%;
+}
+
+/* Configuración del panel de control */
+
+.panelDeControl{
+  background-color: var(---btnOneColor);
+  position: fixed;
+  width: 8%;
+  height: 100%;
+  top: var(---navBarHeight);
+  left: 0;
+}
+
+.panelDeControl li{
+  list-style-type: none;
+  height: 50px;
+}
+
+.panelDeControl ul{
+  padding-left: 0;
+  text-align: center;
+}
+.panelDeControl li:last-child{
+  position: absolute;
+  top: 90%;
+  margin-left: 20%;  
+}
