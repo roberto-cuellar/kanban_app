@@ -26,7 +26,7 @@ body a:visited{
   color: var(---fontLigthColor);
 }
 
-
+/* Grid Layout Setup */
 .mainContainer{
   position: fixed;
   width: 100%;
@@ -39,64 +39,56 @@ body a:visited{
   row-gap: 1px;
 }
 
+
 .navBar{
   grid-column-start: 1;
   grid-column-end: 3;
+  position: relative;
+  background-color: var(---btnOneColor);
 }
 
 /* Configuración de la Navbar */
 
-/* .navBar{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: var(---navBarHeight);
-  background-color: var(---btnOneColor);
-  color: var(---fontLigthColor);
-}
-
-.navBar li{
-  list-style-type: none;
-  display: inline-block;
-  margin-right: 1%;
-}
-
-.navBar li+li{
+.navBar button{
   position: relative;
-  left: 79%;
-} */
+  left: 87%;
+  display: inline-block;
+  height: 100%;
+}
 
 /* Configuración del panel de control */
-
-/* .panelDeControl{
-  background-color: var(---btnOneColor);
-  position: fixed; 
-  width: 8%;
-  height: 100%;
-  top: var(---navBarHeight); 
-  left: 0;
-}
-
-.panelDeControl li{
-  list-style-type: none;
-  height: 50px;
-}
-
-.panelDeControl ul{
-  padding-left: 0;
-  text-align: center;
-}
-.panelDeControl li:last-child{
-  position: absolute;
-  top: 90%;
-  margin-left: 20%;  
-} */
-
-/* Tableros */
-
-/* .tableros{
+.panelDeControl{
   position: relative;
-  left: 100px;
+}
 
-} */
+.panelDeControl button{
+  display: inline-block;
+  width: 100%;
+  height: 80px;
+}
+
+.panelDeControl button:last-child{
+  margin-top: 520px;
+  bottom: 200px;
+}
+
+/* Setup the work space */
+.workSpace{
+  padding: 20px;
+  padding-top: 2px;
+  overflow: scroll;
+}
+
+
+/* Setup the cards */
+
+.cartaEstado{
+  display: inline-block;
+  margin-right: 20px;
+  width: 23%;
+  background-color: var(---fontLigthColor);
+}
+
+.tarea{
+  background-color: aquamarine;
+}
