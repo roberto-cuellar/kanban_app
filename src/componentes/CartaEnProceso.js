@@ -1,13 +1,21 @@
 import React, { useState,useReducer, useEffect } from 'react'
-import { porHacerReducer } from '../reducers/porHacerReducer';
-import { enProcesoReducer } from '../reducers/enProcesoReducer';
 import { Tarea } from './Tarea';
+import { taskReducer } from '../reducers/taskReducer';
+
+const init = () =>{
+    return JSON.parse(localStorage.getItem('enProceso')) || [];
+}
+
 
 export const CartaEnProceso = () => {
-    const [descripcion, setDescripcion] = useState(""); // Estado para el almacenamiento de la descripción de la tarea a agregar por Hacer    
-    const [porHacer, dispatch] = useReducer(porHacerReducer, []); /// Reducer para la manipulación de los por hacer
+    const [descripcion, setDescripcion] = useState(""); // Estado para el almacenamiento de la descripción de la tarea a agregar En proceso
+    const [enProceso, dispatch] = useReducer(taskReducer, [],init); /// Reducer para la manipulación de los en proceso
     
-    const handleInputChange = (e) =>{ // Cambio del estado descripción del estado por Hacer
+    useEffect(()=>{
+        localStorage.setItem('enProceso',JSON.stringify(enProceso)); /// Solo actualiza el local storage si y solo sí, hay un cambio en el reducer, es decir, si se eliminó o agregó una nueva tarea en En Proceso
+    },[enProceso])
+
+    const handleInputChange = (e) =>{ // Cambio del estado descripción del estado En Proceso
         setDescripcion(e.target.value);
     }
 
@@ -17,7 +25,7 @@ export const CartaEnProceso = () => {
             return;
         }
 
-        const nuevoPorHacer = { ///  Estructura del nuevo Por Hacer
+        const nuevoEnProceso = { ///  Estructura del nuevo En Proceso
             id: new Date().getTime(),
             desc: descripcion,
             estado: 'por hacer'
@@ -25,7 +33,7 @@ export const CartaEnProceso = () => {
 
         const accion = {
             type: 'add',
-            payload: nuevoPorHacer
+            payload: nuevoEnProceso
         }
         dispatch(accion); /// Se entrega al reducer para la actualización
         setDescripcion(""); // Se actualiza el estado del formulario
@@ -39,18 +47,16 @@ export const CartaEnProceso = () => {
         dispatch(action);
     }
 
-
-
-
+    
 
   return (
-    /// Carta En Proceso
+    /// Carta Por Hacer
     <>
     
     <div className='cartaEstado'>
-      <p className='cartaTitulo'>En Proceso : {porHacer.length}</p>
+      <p className='cartaTitulo'>En Proceso : {enProceso.length}</p>
         {
-            porHacer.map((item,i)=>{
+            enProceso.map((item,i)=>{
                 return(
                     <Tarea key={item.id} tarea={item} num={i} handleDelete ={handleDelete} />
                 )
@@ -61,7 +67,7 @@ export const CartaEnProceso = () => {
         <input 
           type='text' 
           name='descripcion' 
-          placeholder='Tarea a agregar' 
+          placeholder='Agregar "En Proceso"' 
           autoComplete='off'
           value={descripcion}
           onChange={handleInputChange}

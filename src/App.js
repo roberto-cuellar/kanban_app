@@ -12,7 +12,8 @@ export const App = () => {
     <>    
       <Router>
         <Routes>
-            <Route exact path="/" element={<MainContainer />}/>
+            {/* la ruta principal apunta al contenedor principal para efectos de la grilla de diseño */}
+            <Route exact path="/" element={<MainContainer />}/> 
         </Routes>
       </Router>
     </>    

@@ -1,26 +1,19 @@
 import React, { useState,useReducer, useEffect } from 'react'
-import { porHacerReducer } from '../reducers/porHacerReducer';
-import { enProcesoReducer } from '../reducers/enProcesoReducer';
 import { Tarea } from './Tarea';
+import { taskReducer } from '../reducers/taskReducer';
 
 const init = () =>{
-
     return JSON.parse(localStorage.getItem('porHacer')) || [];
-    // return [{
-    //     id: new Date().getTime(),
-    //     desc: "Aprender React",
-    //     done: false
-    // }];
-
 }
 
 
 export const CartaPorHacer = () => {
     const [descripcion, setDescripcion] = useState(""); // Estado para el almacenamiento de la descripción de la tarea a agregar por Hacer    
-    const [porHacer, dispatch] = useReducer(porHacerReducer, [],init); /// Reducer para la manipulación de los por hacer
+    const [porHacer, dispatch] = useReducer(taskReducer, [],init); /// Reducer para la manipulación de los por hacer
+    // const [porHacer, dispatch] = useReducer(porHacerReducer, [],init); /// Reducer para la manipulación de los por hacer
     
     useEffect(()=>{
-        localStorage.setItem('porHacer',JSON.stringify(porHacer))
+        localStorage.setItem('porHacer',JSON.stringify(porHacer)); /// Solo actualiza el local storage si y solo sí, hay un cambio en el reducer, es decir, si se eliminó o agregó una nueva tarea
     },[porHacer])
 
     const handleInputChange = (e) =>{ // Cambio del estado descripción del estado por Hacer

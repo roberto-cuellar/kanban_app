@@ -1,4 +1,12 @@
-export const enProcesoReducer = (state = [],action) => {
+
+
+//Reducer de uso general para las 4 cartas (por por Hacer, en proceso, en revisió, y completado )
+// Tiene las siguientes acciones:
+//  add: Agregar una nueva tarea, actualizando el estado que le envían tras sumarle la misma, que viene en action. payload
+//  delete: Eliminar una tarea específica, filtrando del estado anterior, la tarea con id action.payload
+
+
+export const taskReducer = (state = [],action) => {
 
     switch (action.type) {
         case 'add':

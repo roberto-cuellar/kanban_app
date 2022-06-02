@@ -8,6 +8,7 @@ import { Tableros } from './Tableros'
 
 export const WorkSpace = ({screen='Tableros'}) => {
     /// Screens disponibles para el área de trabajo
+    /// Se verifica la pantalla entrante para proseguir a renderizar el componente seleccionado
     
 
   return (

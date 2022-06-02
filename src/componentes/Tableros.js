@@ -2,7 +2,7 @@ import React from 'react'
 import { CartaEnProceso } from './CartaEnProceso'
 import { CartaPorHacer } from './CartaPorHacer'
 
-export const Tableros = () => {
+export const Tableros = () => { //Este componente  se encarga de posicionar los subcomponentes de cartas por hacer, en proceso, en revisión y finalizado
     
   return (
     <div className='tableros'>
