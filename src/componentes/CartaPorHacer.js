@@ -2,7 +2,7 @@ import React, { useState,useReducer, useEffect } from 'react'
 import { Tarea } from './Tarea';
 import { taskReducer } from '../reducers/taskReducer';
 import { Input,Card,CardActions,Typography,CardContent,Button,ButtonGroup } from '@mui/material';
-
+import Grow from '@mui/material/Grow';
 export const CartaPorHacer = ({tablero}) => {
     !localStorage.getItem(tablero+'porhacer')&& localStorage.setItem(tablero+'porhacer',JSON.stringify([]));
     const initial = JSON.parse(localStorage.getItem(tablero+'porhacer'));
@@ -98,6 +98,7 @@ export const CartaPorHacer = ({tablero}) => {
   return (
     /// Carta Por Hacer
     <>
+    <Grow in={true}>
     
     <Card className='cartaEstado draggeable porhacer' id='porHacerContainer' onDrop={(e)=>handleDrop(e)} onDragOver={(e)=> handleDragOver(e)} >
       <CardContent>
@@ -126,7 +127,7 @@ export const CartaPorHacer = ({tablero}) => {
       </form> 
       </CardActions>     
     </Card>
-        
+    </Grow>
     </>
   )
 }

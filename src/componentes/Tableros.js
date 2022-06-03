@@ -6,6 +6,7 @@ import { CartaEnRevision } from './CartaEnRevision';
 import { CartaPorHacer } from './CartaPorHacer'
 import {Grid,Typography,FormControl,Input} from '@mui/material';
 
+
 import { Container,Card,CardContent,Button,ButtonGroup } from '@mui/material';
 
 const initialState = [{
@@ -63,6 +64,10 @@ export const Tableros = () => { //Este componente  se encarga de posicionar los 
 }
 
   const handleDelete = (tableroId,tableroName)=>{ /// Función para borrar el almacenamiento de cierto tablero
+    let cont;
+    if(window.confirm("¿Desea Borrar el tablero "+tableroName+'?')){
+      const cont = "presionado";
+    
     const action = {
         type: 'delete',
         payload: tableroId
@@ -73,6 +78,7 @@ export const Tableros = () => { //Este componente  se encarga de posicionar los 
     localStorage.removeItem(tableroName+'enrevision');
     localStorage.removeItem(tableroName+'completado');
     setTablero('general');
+  }
   }
   
 
@@ -95,7 +101,7 @@ export const Tableros = () => { //Este componente  se encarga de posicionar los 
 
 
   return (
-    <Grid container spacing={0} >
+    <Grid container spacing={0}  sx={{ml: 1}}>
       <Grid item xs={12}>
         <Typography variant="h4">Tableros</Typography>
       </Grid>
@@ -110,7 +116,7 @@ export const Tableros = () => { //Este componente  se encarga de posicionar los 
           onChange={handleInputChange}
         />
         {/* <button type='submit'>Agregar <span>+</span></button> */}
-        <Button type='submit'>Agregar +</Button>
+        <Button variant='contained' type='submit'>Agregar +</Button>
       </form>
       </Grid>
       <Grid item xs={5}>
@@ -137,7 +143,8 @@ export const Tableros = () => { //Este componente  se encarga de posicionar los 
       {/* <button onClick={()=>handleClean(tablero)}>Limpiar</button>  */}
       <Grid container spacing={1} className='cartasEstados'>
         <Grid item xs={3}>
-          <CartaPorHacer tablero={tablero}/>        
+        
+          <CartaPorHacer tablero={tablero}/>
         </Grid>
         <Grid item xs={3}>
           <CartaEnProceso tablero={tablero}/>         

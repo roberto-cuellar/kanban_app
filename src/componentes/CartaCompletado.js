@@ -2,7 +2,7 @@ import React, { useState,useReducer, useEffect } from 'react'
 import { Tarea } from './Tarea';
 import { taskReducer } from '../reducers/taskReducer';
 import { Input,Card,CardActions,Typography,CardContent,Button,ButtonGroup } from '@mui/material';
-
+import Grow from '@mui/material/Grow';
 export const CartaCompletado = ({tablero}) => {
     !localStorage.getItem(tablero+'completado')&& localStorage.setItem(tablero+'completado',JSON.stringify([]));
     const initial = JSON.parse(localStorage.getItem(tablero+'completado'));
@@ -98,7 +98,7 @@ export const CartaCompletado = ({tablero}) => {
   return (
     /// Carta Por Hacer
     <>
-    
+    <Grow in={true}>
     <Card className='cartaEstado draggeable completado' id='completadoContainer' onDrop={(e)=>handleDrop(e)} onDragOver={(e)=> handleDragOver(e)} >
       <CardContent>
       <Typography className='cartaTitulo draggeable completado' sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -126,7 +126,7 @@ export const CartaCompletado = ({tablero}) => {
       </form>
       </CardActions>
     </Card>
-        
+    </Grow>   
     </>
     
 

@@ -2,6 +2,7 @@ import React, { useState,useReducer, useEffect } from 'react'
 import { Tarea } from './Tarea';
 import { taskReducer } from '../reducers/taskReducer';
 import { Input,Card,CardActions,Typography,CardContent,Button,ButtonGroup } from '@mui/material';
+import Grow from '@mui/material/Grow';
 
 const init = (tablero) =>{
     return JSON.parse(localStorage.getItem(tablero+'enproceso')) || [];
@@ -104,7 +105,7 @@ export const CartaEnProceso = ({tablero}) => {
   return (
     /// Carta Por Hacer
     <>
-    
+    <Grow in={true}>
     <Card className='cartaEstado  draggeable enproceso' id='enProcesoContainer' value='enproceo' onDrop={(e)=>handleDrop(e)} onDragOver={(e)=> handleDragOver(e)}>
       <CardContent>
       <Typography className='cartaTitulo draggeable enproceso' sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -132,7 +133,7 @@ export const CartaEnProceso = ({tablero}) => {
         </form>      
       </CardActions>
     </Card>
-        
+    </Grow> 
     </>
     
 

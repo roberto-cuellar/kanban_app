@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Input,Card,CardActions,Typography,CardContent,Button,ButtonGroup } from '@mui/material';
 import Grow from '@mui/material/Grow';
+
 export const Tarea = ({tarea = '', num = '',handleDelete,carta}) => {
     
     const handleDragStart = (e)=>{
@@ -20,6 +21,14 @@ export const Tarea = ({tarea = '', num = '',handleDelete,carta}) => {
             }
         } 
     }
+    // const mounted = true;
+    // useEffect(()=>{
+    //     mounted=true;
+    //     return(
+    //         console.log(mounted))
+            
+
+    // },[tarea])
 
     const  handleDragOver = (event) => { /// Para poder trabajar con el Drop, se debe prevenir el comportamiento por defecto del DragOver
         event.preventDefault();
