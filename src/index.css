@@ -95,3 +95,14 @@ body a:visited{
 .tarea{
   background-color: aquamarine;
 }
+
+/* Setud the list of boards */
+
+.tablerosList{
+  /* background-color: rgb(253, 238, 106); */
+  /* padding: 2px;
+  border: 1px solid black; */
+}
+.deleteTablero{
+  margin-right: 10px;
+}

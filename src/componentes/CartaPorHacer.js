@@ -2,20 +2,39 @@ import React, { useState,useReducer, useEffect } from 'react'
 import { Tarea } from './Tarea';
 import { taskReducer } from '../reducers/taskReducer';
 
-const init = () =>{
-    return JSON.parse(localStorage.getItem('porHacer')) || [];
-}
-
-
-export const CartaPorHacer = () => {
+export const CartaPorHacer = ({tablero}) => {
+    !localStorage.getItem(tablero+'porhacer')&& localStorage.setItem(tablero+'porhacer',JSON.stringify([]));
+    const initial = JSON.parse(localStorage.getItem(tablero+'porhacer'));
     const [descripcion, setDescripcion] = useState(""); // Estado para el almacenamiento de la descripción de la tarea a agregar por Hacer    
-    const [porHacer, dispatch] = useReducer(taskReducer, [],init); /// Reducer para la manipulación de los por hacer
-    // const [porHacer, dispatch] = useReducer(porHacerReducer, [],init); /// Reducer para la manipulación de los por hacer
+    const [porHacer, dispatch] = useReducer(taskReducer, initial); /// Reducer para la manipulación de los por hacer        
+    useEffect(()=>{
+      /// Se pone en ceros el reducer
+      const accion = {
+        type: 'init',
+        payload: []
+    }
+    dispatch(accion); /// Se entrega al reducer para la actualización
+    // Se verifica si existe el almacenamiento, en caso de que no exista, se crea
+    !localStorage.getItem(tablero+'porhacer')&& localStorage.setItem(tablero+'porhacer',JSON.stringify([]));
+    // Se recuperan los datos
+    const datos = JSON.parse(localStorage.getItem(tablero+'porhacer'));
+    // Se hace el dispatch para cada elemento y así restaurar el la lista del componente
+    datos.forEach(element => {
+      const accion = {
+        type: 'add',
+        payload: element,
+        estado: 'por hacer'
+    }
+    dispatch(accion)
+    });  
+      // localStorage.setItem(tablero+'porhacer',JSON.stringify(porHacer)); 
+    },[tablero])
     
     useEffect(()=>{
-        localStorage.setItem('porHacer',JSON.stringify(porHacer)); /// Solo actualiza el local storage si y solo sí, hay un cambio en el reducer, es decir, si se eliminó o agregó una nueva tarea
+      localStorage.setItem(tablero+'porhacer',JSON.stringify(porHacer)); /// Solo actualiza el local storage si y solo sí, hay un cambio en el reducer, es decir, si se eliminó o agregó una nueva tarea
     },[porHacer])
 
+  
     const handleInputChange = (e) =>{ // Cambio del estado descripción del estado por Hacer
         setDescripcion(e.target.value);
     }

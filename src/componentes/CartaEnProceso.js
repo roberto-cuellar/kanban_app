@@ -2,17 +2,42 @@ import React, { useState,useReducer, useEffect } from 'react'
 import { Tarea } from './Tarea';
 import { taskReducer } from '../reducers/taskReducer';
 
-const init = () =>{
-    return JSON.parse(localStorage.getItem('enProceso')) || [];
+const init = (tablero) =>{
+    return JSON.parse(localStorage.getItem(tablero+'enproceso')) || [];
 }
 
 
-export const CartaEnProceso = () => {
+export const CartaEnProceso = ({tablero}) => {
+  !localStorage.getItem(tablero+'porhacer')&& localStorage.setItem(tablero+'enproceso',JSON.stringify([]));
     const [descripcion, setDescripcion] = useState(""); // Estado para el almacenamiento de la descripción de la tarea a agregar En proceso
-    const [enProceso, dispatch] = useReducer(taskReducer, [],init); /// Reducer para la manipulación de los en proceso
+    const [enProceso, dispatch] = useReducer(taskReducer, []); /// Reducer para la manipulación de los en proceso
     
     useEffect(()=>{
-        localStorage.setItem('enProceso',JSON.stringify(enProceso)); /// Solo actualiza el local storage si y solo sí, hay un cambio en el reducer, es decir, si se eliminó o agregó una nueva tarea en En Proceso
+      /// Se pone en ceros el reducer
+      const accion = {
+        type: 'init',
+        payload: []
+    }
+    dispatch(accion); /// Se entrega al reducer para la actualización
+    // Se verifica si existe el almacenamiento, en caso de que no exista, se crea
+    !localStorage.getItem(tablero+'enproceso')&& localStorage.setItem(tablero+'enproceso',JSON.stringify([]));
+    // Se recuperan los datos
+    const datos = JSON.parse(localStorage.getItem(tablero+'enproceso'));
+    // Se hace el dispatch para cada elemento y así restaurar el la lista del componente
+    datos.forEach(element => {
+      const accion = {
+        type: 'add',
+        payload: element,
+        estado: 'en proceso'
+    }
+    dispatch(accion)
+    });  
+      // localStorage.setItem(tablero+'porhacer',JSON.stringify(porHacer)); 
+    },[tablero])
+
+
+    useEffect(()=>{
+        localStorage.setItem(tablero+'enproceso',JSON.stringify(enProceso)); /// Solo actualiza el local storage si y solo sí, hay un cambio en el reducer, es decir, si se eliminó o agregó una nueva tarea en En Proceso
     },[enProceso])
 
     const handleInputChange = (e) =>{ // Cambio del estado descripción del estado En Proceso
