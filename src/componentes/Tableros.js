@@ -15,20 +15,22 @@ const init = () =>{
 }
 
 export const Tableros = () => { //Este componente  se encarga de posicionar los subcomponentes de cartas por hacer, en proceso, en revisión y finalizado
-    
+  
+  !localStorage.getItem('tableros')&& localStorage.setItem('tableros',JSON.stringify(initialState));
+  const initial = JSON.parse(localStorage.getItem('tableros'));
   const [descripcion, setDescripcion] = useState(""); // Estado para el almacenamiento del nombre del tablero a agregar en la página de tableros
-  const [tableros, dispatch] = useReducer(tablerosReducer, initialState,init); /// Reducer para la manipulación de los tableros
+  // const [tableros, dispatch] = useReducer(tablerosReducer, initialState,init); /// Reducer para la manipulación de los tableros
+  const [tableros, dispatch] = useReducer(tablerosReducer, initial); /// Reducer para la manipulación de los tableros
   const [tablero,setTablero] = useState("general");
 
   const handleInputChange = (e) =>{ // Cambio del estado descripcion para el nombre del tablero a crear 
     setDescripcion(e.target.value);
   }
 
-  useEffect(()=>{
 
+  useEffect(()=>{
     localStorage.setItem('tableros',JSON.stringify(tableros)); /// Solo actualiza el local storage si y solo sí, hay un cambio en el reducer, es decir, si se eliminó o agregó un nuevo tablero
-    // localStorage.setItem(tablero+'porhacer',JSON.stringify([]));
-    
+    // localStorage.setItem(tablero+'porhacer',JSON.stringify([]));    
   },[tableros])
 
 
@@ -57,13 +59,16 @@ export const Tableros = () => { //Este componente  se encarga de posicionar los 
     setDescripcion(""); // Se actualiza el estado del formulario
 }
 
-  const handleDelete = (tableroId)=>{
+  const handleDelete = (tableroId,tableroName)=>{
     const action = {
         type: 'delete',
         payload: tableroId
     }
     dispatch(action);
+    localStorage.clear(tableroName);
+    setTablero('general');
   }
+  
 
   const handleClick = (e) =>{
     setTablero(e);
@@ -84,17 +89,18 @@ export const Tableros = () => { //Este componente  se encarga de posicionar los 
         />
         <button type='submit'>Agregar <span>+</span></button>
       </form>
-      {
+      {console.log(tableros)}
+      {        
        tableros.map((element)=>{
          return(
            <>
               <button key={element.id} className='tablerosList' onClick={()=>handleClick(element.tablero)}>{element.tablero}</button>
-              {/* <button
+              <button
                   className='deleteTablero'
-                  onClick={() => handleDelete(element.id)}
+                  onClick={() => handleDelete(element.id,element.tablero)}
               >
                   x
-              </button> */}
+              </button>
             </>
          )
        }) 
