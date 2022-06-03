@@ -48,23 +48,48 @@ export const CartaPorHacer = () => {
         dispatch(action);
     }
 
+  const  handleDragOver = (event) => { /// Para poder trabajar con el Drop, se debe prevenir el comportamiento por defecto del DragOver
+    event.preventDefault();
+  }
+
     
+  const handleDrop = (e) =>{ /// Evento de drop 
+    const origen = e.dataTransfer.getData("text").split(",");
+
+    ///Dispatch
+    if(origen[2]!=='porhacer'){
+      const nuevoPorHacer = { ///  Estructura del nuevo por Hacer
+        id: origen[0],
+        desc: origen[1],
+        estado: 'por hacer'
+    }
+
+    const accion = {
+        type: 'add',
+        payload: nuevoPorHacer
+    }
+      dispatch(accion); /// Se entrega al reducer para la actualización
+      setDescripcion(""); // Se actualiza el estado del formulario
+      e.dataTransfer.setData("text/plain", "porhacer");
+  }
+
+  }
 
   return (
     /// Carta Por Hacer
     <>
     
-    <div className='cartaEstado'>
-      <p className='cartaTitulo'>Por Hacer : {porHacer.length}</p>
+    <div className='cartaEstado draggeable porhacer' id='porHacerContainer' onDrop={(e)=>handleDrop(e)} onDragOver={(e)=> handleDragOver(e)} >
+      <p className='cartaTitulo draggeable porhacer'>Por Hacer : {porHacer.length}</p>
         {
             porHacer.map((item,i)=>{
                 return(
-                    <Tarea key={item.id} tarea={item} num={i} handleDelete ={handleDelete} />
+                    <Tarea key={item.id} tarea={item} num={i} handleDelete ={handleDelete} carta="porhacer" />
                 )
         })
         }
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className=' draggeable porhacer'>
         <input 
           type='text' 
           name='descripcion' 
