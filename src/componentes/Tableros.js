@@ -1,6 +1,8 @@
 import React, { useEffect, useReducer, useState } from 'react'
 import { tablerosReducer } from '../reducers/tablerosReducer';
+import { CartaCompletado } from './CartaCompletado';
 import { CartaEnProceso } from './CartaEnProceso'
+import { CartaEnRevision } from './CartaEnRevision';
 import { CartaPorHacer } from './CartaPorHacer'
 
 const initialState = [{
@@ -22,11 +24,12 @@ export const Tableros = () => { //Este componente  se encarga de posicionar los 
     setDescripcion(e.target.value);
   }
 
-  // useEffect(()=>{
-  //   localStorage.setItem('tableros',JSON.stringify(tableros)); /// Solo actualiza el local storage si y solo sí, hay un cambio en el reducer, es decir, si se eliminó o agregó un nuevo tablero
-  //   // localStorage.setItem(tablero+'porhacer',JSON.stringify([]));
+  useEffect(()=>{
+
+    localStorage.setItem('tableros',JSON.stringify(tableros)); /// Solo actualiza el local storage si y solo sí, hay un cambio en el reducer, es decir, si se eliminó o agregó un nuevo tablero
+    // localStorage.setItem(tablero+'porhacer',JSON.stringify([]));
     
-  // },[tableros])
+  },[tableros])
 
 
   // useEffect(()=>{
@@ -101,6 +104,8 @@ export const Tableros = () => { //Este componente  se encarga de posicionar los 
       <div className='cartasEstados'>
           <CartaPorHacer tablero={tablero}/> 
           <CartaEnProceso tablero={tablero}/>        
+          <CartaEnRevision tablero={tablero}/>     
+          <CartaCompletado tablero={tablero}/>    
       </div>
       
     </div>
