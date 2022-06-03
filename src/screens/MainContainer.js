@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Navbar } from '../componentes/Navbar'
 import { PanelDeControl } from '../componentes/PanelDeControl'
 import { WorkSpace } from '../componentes/WorkSpace'
-
+import {Grid} from '@mui/material';
 export const MainContainer = () => {
 
   const [screen, setScreen] = useState("Tableros"); 
@@ -12,11 +12,21 @@ export const MainContainer = () => {
   
 
   return (
-
-    <div className='mainContainer'>
-        <Navbar setScreen={setScreen}/>
+    <Grid container spacing={0} >
+      <Grid container spacing={0} justifyContent='flex-end' sx={{ bgcolor: 'text.disabled'}} >
+        <Grid item >
+            <Navbar setScreen={setScreen}/>     
+        </Grid>
+      </Grid>
+      
+      <Grid item xs={1}>
         <PanelDeControl setScreen={setScreen} />
-        <WorkSpace screen = {screen}  />
-      </div>
+      </Grid>
+      <Grid item xs={11}>
+        <WorkSpace screen = {screen} />
+      </Grid>
+
+
+    </Grid>
   )
 }

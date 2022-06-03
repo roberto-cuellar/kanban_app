@@ -1,6 +1,7 @@
 import React, { useState,useReducer, useEffect } from 'react'
 import { Tarea } from './Tarea';
 import { taskReducer } from '../reducers/taskReducer';
+import { Input,Card,CardActions,Typography,CardContent,Button,ButtonGroup } from '@mui/material';
 
 export const CartaPorHacer = ({tablero}) => {
     !localStorage.getItem(tablero+'porhacer')&& localStorage.setItem(tablero+'porhacer',JSON.stringify([]));
@@ -98,8 +99,11 @@ export const CartaPorHacer = ({tablero}) => {
     /// Carta Por Hacer
     <>
     
-    <div className='cartaEstado draggeable porhacer' id='porHacerContainer' onDrop={(e)=>handleDrop(e)} onDragOver={(e)=> handleDragOver(e)} >
-      <p className='cartaTitulo draggeable porhacer'>Por Hacer : {porHacer.length}</p>
+    <Card className='cartaEstado draggeable porhacer' id='porHacerContainer' onDrop={(e)=>handleDrop(e)} onDragOver={(e)=> handleDragOver(e)} >
+      <CardContent>
+        <Typography className='cartaTitulo draggeable porhacer' sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          Por Hacer : {porHacer.length}
+        </Typography>
         {
             porHacer.map((item,i)=>{
                 return(
@@ -107,9 +111,10 @@ export const CartaPorHacer = ({tablero}) => {
                 )
         })
         }
-
+        </CardContent>
+        <CardActions>
       <form onSubmit={handleSubmit} className=' draggeable porhacer'>
-        <input 
+        <Input 
           type='text' 
           name='descripcion' 
           placeholder='Tarea a agregar' 
@@ -117,13 +122,11 @@ export const CartaPorHacer = ({tablero}) => {
           value={descripcion}
           onChange={handleInputChange}
         />
-        <button type='submit'>Agregar <span>+</span></button>
-      </form>      
-    </div>
+        <Button variant='contained' type='submit'>Agregar +</Button>
+      </form> 
+      </CardActions>     
+    </Card>
         
     </>
-    
-
-
   )
 }

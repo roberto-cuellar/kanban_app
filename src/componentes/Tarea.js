@@ -1,5 +1,7 @@
 import React from 'react'
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Input,Card,CardActions,Typography,CardContent,Button,ButtonGroup } from '@mui/material';
+import Grow from '@mui/material/Grow';
 export const Tarea = ({tarea = '', num = '',handleDelete,carta}) => {
     
     const handleDragStart = (e)=>{
@@ -24,16 +26,28 @@ export const Tarea = ({tarea = '', num = '',handleDelete,carta}) => {
     }
 
   return (
-    
-    <div className={`tarea draggeable ${carta}`} id={tarea.id} value={carta} draggable='true' onDragStart={(e)=>handleDragStart(e)} onDragEnd={handleDragEnd} onDragOver={(e)=> handleDragOver(e)} >
-        <p className={`draggeable ${carta}`}> {tarea.desc}</p>
-        <button
+    <Grow in={true}>
+    <Card sx={{ bgcolor: 'text.disabled',mt: 1}} className={`tarea draggeable ${carta}`} id={tarea.id} value={carta} draggable='true' onDragStart={(e)=>handleDragStart(e)} onDragEnd={handleDragEnd} onDragOver={(e)=> handleDragOver(e)} >
+        <CardContent>
+            <Typography className={`draggeable ${carta}`} sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>
+                {tarea.desc}
+            </Typography>
+        </CardContent>
+        <CardActions>
+        <Button
+            size ='small'
+            variant='outlined'
+            startIcon={<DeleteIcon />}
             className={`draggeable ${carta}`}
             onClick={() => handleDelete(tarea.id)}
         >
             Borrar
-        </button>
+        </Button>
+        </CardActions>
+        
        
-    </div>
+    </Card>
+    </Grow>
+    
   )
 }

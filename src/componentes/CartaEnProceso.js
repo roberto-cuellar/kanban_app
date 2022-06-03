@@ -1,6 +1,7 @@
 import React, { useState,useReducer, useEffect } from 'react'
 import { Tarea } from './Tarea';
 import { taskReducer } from '../reducers/taskReducer';
+import { Input,Card,CardActions,Typography,CardContent,Button,ButtonGroup } from '@mui/material';
 
 const init = (tablero) =>{
     return JSON.parse(localStorage.getItem(tablero+'enproceso')) || [];
@@ -104,8 +105,11 @@ export const CartaEnProceso = ({tablero}) => {
     /// Carta Por Hacer
     <>
     
-    <div className='cartaEstado  draggeable enproceso' id='enProcesoContainer' value='enproceo' onDrop={(e)=>handleDrop(e)} onDragOver={(e)=> handleDragOver(e)}>
-      <p className='cartaTitulo  draggeable  enproceso'>En Proceso : {enProceso.length}</p>
+    <Card className='cartaEstado  draggeable enproceso' id='enProcesoContainer' value='enproceo' onDrop={(e)=>handleDrop(e)} onDragOver={(e)=> handleDragOver(e)}>
+      <CardContent>
+      <Typography className='cartaTitulo draggeable enproceso' sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+      En Proceso : {enProceso.length}
+        </Typography>
         {
             enProceso.map((item,i)=>{
                 return(
@@ -113,19 +117,21 @@ export const CartaEnProceso = ({tablero}) => {
                 )
         })
         }
-
-      <form onSubmit={handleSubmit}  className= 'draggeable enproceso'>
-        <input 
-          type='text' 
-          name='descripcion' 
-          placeholder='Agregar "En Proceso"' 
-          autoComplete='off'
-          value={descripcion}
-          onChange={handleInputChange}
-        />
-        <button type='submit'>Agregar <span>+</span></button>
-      </form>      
-    </div>
+      </CardContent>
+      <CardActions>
+        <form onSubmit={handleSubmit}  className= 'draggeable enproceso'>
+          <Input 
+            type='text' 
+            name='descripcion' 
+            placeholder='Agregar "En Proceso"' 
+            autoComplete='off'
+            value={descripcion}
+            onChange={handleInputChange}
+          />
+          <Button variant='contained' type='submit'>Agregar +</Button>
+        </form>      
+      </CardActions>
+    </Card>
         
     </>
     

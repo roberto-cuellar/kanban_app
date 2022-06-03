@@ -4,6 +4,9 @@ import { CartaCompletado } from './CartaCompletado';
 import { CartaEnProceso } from './CartaEnProceso'
 import { CartaEnRevision } from './CartaEnRevision';
 import { CartaPorHacer } from './CartaPorHacer'
+import {Grid,Typography,FormControl,Input} from '@mui/material';
+
+import { Container,Card,CardContent,Button,ButtonGroup } from '@mui/material';
 
 const initialState = [{
   id: new Date().getTime(),
@@ -59,13 +62,16 @@ export const Tableros = () => { //Este componente  se encarga de posicionar los 
     setDescripcion(""); // Se actualiza el estado del formulario
 }
 
-  const handleDelete = (tableroId,tableroName)=>{
+  const handleDelete = (tableroId,tableroName)=>{ /// Función para borrar el almacenamiento de cierto tablero
     const action = {
         type: 'delete',
         payload: tableroId
     }
     dispatch(action);
-    localStorage.clear(tableroName);
+    localStorage.removeItem(tableroName+'porhacer');
+    localStorage.removeItem(tableroName+'enproceso');
+    localStorage.removeItem(tableroName+'enrevision');
+    localStorage.removeItem(tableroName+'completado');
     setTablero('general');
   }
   
@@ -74,12 +80,28 @@ export const Tableros = () => { //Este componente  se encarga de posicionar los 
     setTablero(e);
   }
 
+  const handleClean = (tableroName) =>{ /// Función para borrar el contenido de los tableros, pero no el tablero
+    localStorage.removeItem(tableroName+'porhacer');
+    localStorage.removeItem(tableroName+'enproceso');
+    localStorage.removeItem(tableroName+'enrevision');
+    localStorage.removeItem(tableroName+'completado');
+    const action = {
+      type: '',
+      payload: []
+    }
+    dispatch(action); /// Se entrega al reducer para la actualización
+    setTablero(tableroName);
+  }
+
 
   return (
-    <div className='tableros'>
-        <h1> Tableros</h1>
+    <Grid container spacing={0} >
+      <Grid item xs={12}>
+        <Typography variant="h4">Tableros</Typography>
+      </Grid>
+      <Grid item xs={3} sx={{ mb: 1}} >
         <form onSubmit={handleSubmit} className=''>
-        <input 
+        <Input 
           type='text' 
           name='descripcion' 
           placeholder='Agregar Tablero' 
@@ -87,33 +109,51 @@ export const Tableros = () => { //Este componente  se encarga de posicionar los 
           value={descripcion}
           onChange={handleInputChange}
         />
-        <button type='submit'>Agregar <span>+</span></button>
+        {/* <button type='submit'>Agregar <span>+</span></button> */}
+        <Button type='submit'>Agregar +</Button>
       </form>
-      {console.log(tableros)}
+      </Grid>
+      <Grid item xs={5}>
       {        
        tableros.map((element)=>{
          return(
-           <>
-              <button key={element.id} className='tablerosList' onClick={()=>handleClick(element.tablero)}>{element.tablero}</button>
-              <button
+           <ButtonGroup variant="text" aria-label="outlined primary button group" > 
+
+              <Button variant="outlined" key={element.id} className='tablerosList' onClick={()=>handleClick(element.tablero)}>{element.tablero}</Button>
+              {(element.tablero!='general')&&<Button
+                  variant="outlined"
+                  color="error"
+                  key = {element.id+11}
                   className='deleteTablero'
                   onClick={() => handleDelete(element.id,element.tablero)}
               >
                   x
-              </button>
-            </>
+              </Button>}
+            </ButtonGroup>
          )
        }) 
-      }
-      <br/>
-      <h4>{tablero}</h4>
-      <div className='cartasEstados'>
-          <CartaPorHacer tablero={tablero}/> 
-          <CartaEnProceso tablero={tablero}/>        
+      }      
+      </Grid>
+      {/* <button onClick={()=>handleClean(tablero)}>Limpiar</button>  */}
+      <Grid container spacing={1} className='cartasEstados'>
+        <Grid item xs={3}>
+          <CartaPorHacer tablero={tablero}/>        
+        </Grid>
+        <Grid item xs={3}>
+          <CartaEnProceso tablero={tablero}/>         
+        </Grid>
+        <Grid item xs={3}>
           <CartaEnRevision tablero={tablero}/>     
+        </Grid>
+        <Grid item xs={3}>
           <CartaCompletado tablero={tablero}/>    
-      </div>
+        </Grid>
+            
+            
+            
+            
+      </Grid>
       
-    </div>
+    </Grid>
   )
 }

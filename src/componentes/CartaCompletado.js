@@ -1,6 +1,7 @@
 import React, { useState,useReducer, useEffect } from 'react'
 import { Tarea } from './Tarea';
 import { taskReducer } from '../reducers/taskReducer';
+import { Input,Card,CardActions,Typography,CardContent,Button,ButtonGroup } from '@mui/material';
 
 export const CartaCompletado = ({tablero}) => {
     !localStorage.getItem(tablero+'completado')&& localStorage.setItem(tablero+'completado',JSON.stringify([]));
@@ -98,8 +99,11 @@ export const CartaCompletado = ({tablero}) => {
     /// Carta Por Hacer
     <>
     
-    <div className='cartaEstado draggeable completado' id='completadoContainer' onDrop={(e)=>handleDrop(e)} onDragOver={(e)=> handleDragOver(e)} >
-      <p className='cartaTitulo draggeable completado'>Completados : {completado.length}</p>
+    <Card className='cartaEstado draggeable completado' id='completadoContainer' onDrop={(e)=>handleDrop(e)} onDragOver={(e)=> handleDragOver(e)} >
+      <CardContent>
+      <Typography className='cartaTitulo draggeable completado' sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        Completados : {completado.length}
+      </Typography>
         {
             completado.map((item,i)=>{
                 return(
@@ -107,9 +111,10 @@ export const CartaCompletado = ({tablero}) => {
                 )
         })
         }
-
+      </CardContent>
+      <CardActions>
       <form onSubmit={handleSubmit} className=' draggeable completado'>
-        <input 
+        <Input 
           type='text' 
           name='descripcion' 
           placeholder='Tarea a agregar' 
@@ -117,9 +122,10 @@ export const CartaCompletado = ({tablero}) => {
           value={descripcion}
           onChange={handleInputChange}
         />
-        <button type='submit'>Agregar <span>+</span></button>
-      </form>      
-    </div>
+        <Button variant='contained' type='submit'>Agregar +</Button>
+      </form>
+      </CardActions>
+    </Card>
         
     </>
     

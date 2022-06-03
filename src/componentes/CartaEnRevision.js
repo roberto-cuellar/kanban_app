@@ -1,6 +1,7 @@
 import React, { useState,useReducer, useEffect } from 'react'
 import { Tarea } from './Tarea';
 import { taskReducer } from '../reducers/taskReducer';
+import { Input,Card,CardActions,Typography,CardContent,Button,ButtonGroup } from '@mui/material';
 
 export const CartaEnRevision = ({tablero}) => {
     !localStorage.getItem(tablero+'enrevision')&& localStorage.setItem(tablero+'enrevision',JSON.stringify([]));
@@ -98,8 +99,11 @@ export const CartaEnRevision = ({tablero}) => {
     /// Carta Por Hacer
     <>
     
-    <div className='cartaEstado draggeable enrevision' id='enRevisionContainer' onDrop={(e)=>handleDrop(e)} onDragOver={(e)=> handleDragOver(e)} >
-      <p className='cartaTitulo draggeable enrevision'>En revisión : {enRevision.length}</p>
+    <Card className='cartaEstado draggeable enrevision' id='enRevisionContainer' onDrop={(e)=>handleDrop(e)} onDragOver={(e)=> handleDragOver(e)} >
+      <CardContent>
+        <Typography className='cartaTitulo draggeable enrevision' sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          En revisión : {enRevision.length}
+        </Typography>
         {
             enRevision.map((item,i)=>{
                 return(
@@ -107,9 +111,10 @@ export const CartaEnRevision = ({tablero}) => {
                 )
         })
         }
-
+        </CardContent>
+        <CardActions>
       <form onSubmit={handleSubmit} className=' draggeable enrevision'>
-        <input 
+        <Input 
           type='text' 
           name='descripcion' 
           placeholder='Tarea a agregar' 
@@ -117,9 +122,10 @@ export const CartaEnRevision = ({tablero}) => {
           value={descripcion}
           onChange={handleInputChange}
         />
-        <button type='submit'>Agregar <span>+</span></button>
+        <Button variant='contained' type='submit'>Agregar +</Button>
       </form>      
-    </div>
+      </CardActions>
+    </Card>
         
     </>
     

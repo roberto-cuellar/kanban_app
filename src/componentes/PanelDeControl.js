@@ -1,5 +1,6 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
+import { Card,CardContent,Button,ButtonGroup } from '@mui/material';
 
 export const PanelDeControl = ({setScreen}) => {
 
@@ -9,22 +10,24 @@ export const PanelDeControl = ({setScreen}) => {
     }
 
   return (
-    <div  className='panelDeControl'>
-        <button value='Mensajes' onClick={(e)=>handleClick(e)}>
-            Mensajes
-        </button>
-        <button value='Tableros' onClick={(e)=>handleClick(e)}>
-            Tableros
-        </button>
-        <button value='Calendario' onClick={(e)=>handleClick(e)}>
-            Calendario
-        </button>
-        <button value='Reportes' onClick={(e)=>handleClick(e)}>
-            Reportes
-        </button>
-        <button value='Configuracion' onClick={(e)=>handleClick(e)}>
-            Configuración
-        </button>
+    <div className='panelDeControl'>
+        <ButtonGroup fullWidth variant="outlined" orientation="vertical" aria-label="vertical outlined button group">
+            <Button size="medium" value='Mensajes' onClick={(e)=>handleClick(e)}>
+                Mensajes
+            </Button>
+            <Button  size="medium" value='Tableros' onClick={(e)=>handleClick(e)}>
+                Tableros
+            </Button>
+            <Button size="medium" value='Calendario' onClick={(e)=>handleClick(e)}>
+                Calendario
+            </Button>
+            <Button size="medium" value='Reportes' onClick={(e)=>handleClick(e)}>
+                Reportes
+            </Button>
+            <Button size="medium" value='Configuracion' onClick={(e)=>handleClick(e)}>
+                Configuración
+            </Button>
+        </ButtonGroup>
     </div>
   )
 }
