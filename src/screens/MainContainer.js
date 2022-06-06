@@ -13,16 +13,25 @@ export const MainContainer = () => {
 
   return (
     <Grid container spacing={0} >
-      <Grid container spacing={0} justifyContent='flex-end' sx={{ bgcolor: 'text.disabled'}} >
+      <Grid 
+        container 
+        spacing={0} 
+        justifyContent='flex-end' 
+        sx={{ 
+          bgcolor: 'text.disabled',
+          marginTop: -1,  
+          marginRight: -20  
+          }}
+      >
         <Grid item >
             <Navbar setScreen={setScreen}/>     
         </Grid>
       </Grid>
       
-      <Grid item xs={1}>
+      <Grid item xs={2}>
         <PanelDeControl setScreen={setScreen} />
       </Grid>
-      <Grid item xs={11}>
+      <Grid item xs={10}>
         <WorkSpace screen = {screen} />
       </Grid>
 
